@@ -9,6 +9,7 @@
     end
 
     SPEAKER_OUT(Speaker Output)
+    AUDIO_DAC-->SPEAKER_OUT
     SPI_DISP-->LED_DRIVER
     
     Processor
@@ -30,10 +31,8 @@
             RAW_AUDIO-->DECODER
             AUDIO_DAC(Audio DAC)
             DECODER-->AUDIO_DAC
-            AUDIO_DAC-->SPEAKER_OUT
         end
     end
     SNES_CONT(Super Nintendo Controller)
     SNES_CONT-->SPI_UI
-
 ```
