@@ -2,7 +2,6 @@
   flowchart BT
     Display
     subgraph Display
-        direction BT
         LED_ARRAY(LED Array)
         LED_DRIVER(LED Driver)
         LED_DRIVER-->LED_ARRAY
@@ -19,8 +18,9 @@
         BUFFER-->SPI_DISP
         RENDER_ENGINE(Render Engine)
         RENDER_ENGINE-->BUFFER
-        GAME_ENGINE(Game Engine)
-        GAME_ENGINE-->RENDER_ENGINE
+        GAME_ENGINE(Game Engine)<-->HIGH_SCORE
+        GAME_ENGINE--->RENDER_ENGINE
+        GAME_ENGINE-->AUDIO
         RNG
         RNG-->GAME_ENGINE
         SPI_UI{{SPI User Input}}
@@ -28,10 +28,15 @@
         subgraph AUDIO
             RAW_AUDIO(Raw Audio)
             DECODER(Decoder)
-            RAW_AUDIO-->DECODER
+            DECODER-->RAW_AUDIO
             AUDIO_DAC(Audio DAC)
-            DECODER-->AUDIO_DAC
+            RAW_AUDIO-->AUDIO_DAC
         end
+        subgraph STORAGE
+            FLASH(Flash)<-->HIGH_SCORE(High Score)
+            FLASH-->AUDIO_FILE(Audio)
+        end
+        AUDIO_FILE-->DECODER
     end
     SNES_CONT(Super Nintendo Controller)
     SNES_CONT-->SPI_UI
